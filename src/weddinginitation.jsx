@@ -133,6 +133,8 @@ html,body{overflow-x:hidden}
 .event-card .venue{color:var(--muted);line-height:1.7;font-size:1rem}
 .event-card .venue strong{color:var(--ink);font-weight:500;display:block;margin-bottom:4px;font-size:1.1rem}
 .event-card .tag{display:inline-block;margin-top:20px;padding:6px 14px;border:1px solid var(--line);border-radius:100px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);background:rgba(232,192,122,.06);text-transform:uppercase;font-weight:600}
+.event-card .map-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;padding:8px 16px;border:1px solid var(--gold);border-radius:100px;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:1.5px;color:var(--gold);background:rgba(232,192,122,.08);text-decoration:none;font-weight:600;transition:all .3s ease}
+.event-card .map-link:hover{background:var(--gold);color:#0d0b12;transform:translateY(-2px);box-shadow:0 8px 20px rgba(232,192,122,.35)}
 .card-haldi{--glow:rgba(246,214,122,.2)}
 .card-wedding{--glow:rgba(232,163,163,.2)}
 .card-reception{--glow:rgba(192,132,252,.2)}
@@ -330,6 +332,7 @@ export default function WeddingInvitation() {
               <strong>Community Hall</strong>
               Manuguru
             </div>
+            <a className="map-link" href="https://www.google.com/maps/place/COMMUNITY+HALL/@17.9088119,80.7997859,17z/data=!3m1!4b1!4m6!3m5!1s0x3a33fe1a6e1582ff:0x79419ba47e9ae6d5!8m2!3d17.9088119!4d80.7997859!16s%2Fg%2F11gcxz0_d3" target="_blank" rel="noopener noreferrer">📍 View on Map</a>
           </Reveal>
 
           <Reveal variant="fade-right" className="event-card card-reception">
@@ -344,6 +347,7 @@ export default function WeddingInvitation() {
               <strong>Gowtham Grand</strong>
               Tenali
             </div>
+            <a className="map-link" href="https://maps.app.goo.gl/e5RMAyrKEgwF3HqJ9" target="_blank" rel="noopener noreferrer">📍 View on Map</a>
           </Reveal>
         </div>
       </section>
