@@ -25,7 +25,7 @@ html,body{overflow-x:hidden}
 .couple-photo{position:fixed;left:50%;bottom:-5vh;z-index:5;width:min(260px,60vw);aspect-ratio:1/1;transform:translate(-50%,120vh);background-image:url(${coupleImg});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55)) drop-shadow(0 0 30px rgba(232,192,122,.4));pointer-events:none;will-change:transform}
 .clouds{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;transition:opacity .3s linear}
 .cloud{position:absolute;background:radial-gradient(ellipse at center,rgba(255,255,255,.95),rgba(255,255,255,.7) 50%,transparent 75%);border-radius:50%;filter:blur(6px);animation:cloudDrift linear infinite}
-@keyframes cloudDrift{0%{transform:translateX(-20vw)}100%{transform:translateX(120vw)}}
+@keyframes cloudDrift{0%{transform:translateX(-50vw)}100%{transform:translateX(120vw)}}
 .night-stars{position:fixed;inset:0;z-index:2;pointer-events:none;transition:opacity .3s linear}
 .night-stars .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 6px #fff;animation:twinkle 3s ease-in-out infinite}
 .moon{position:fixed;top:8vh;right:10vw;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0%,#f5efd0 50%,#e8c07a 100%);box-shadow:0 0 60px rgba(255,240,200,.6),0 0 120px rgba(232,192,122,.35);z-index:2;pointer-events:none;transition:opacity .3s linear}
@@ -237,26 +237,26 @@ export default function WeddingInvitation() {
       <div className="sun" style={{ opacity: day, transform: `translateY(${scrollPct * 1.5}px)` }} />
       <div className="moon" style={{ opacity: night, transform: `translateY(${(100 - scrollPct) * -1.2}px)` }} />
       <div className="clouds" style={{ opacity: cloudsOpacity }}>
-        <span className="cloud" style={{ width: 260, height: 80, top: "8%", animationDuration: "55s", animationDelay: "0s" }} />
-        <span className="cloud" style={{ width: 180, height: 60, top: "18%", animationDuration: "70s", animationDelay: "-20s" }} />
-        <span className="cloud" style={{ width: 340, height: 100, top: "30%", animationDuration: "85s", animationDelay: "-40s" }} />
-        <span className="cloud" style={{ width: 200, height: 70, top: "42%", animationDuration: "65s", animationDelay: "-10s" }} />
-        <span className="cloud" style={{ width: 300, height: 90, top: "4%", animationDuration: "95s", animationDelay: "-60s" }} />
-        <span className="cloud" style={{ width: 220, height: 75, top: "24%", animationDuration: "75s", animationDelay: "-35s" }} />
-        <span className="cloud" style={{ width: 280, height: 85, top: "14%", animationDuration: "80s", animationDelay: "-15s" }} />
-        <span className="cloud" style={{ width: 160, height: 55, top: "36%", animationDuration: "60s", animationDelay: "-45s" }} />
-        <span className="cloud" style={{ width: 380, height: 110, top: "52%", animationDuration: "100s", animationDelay: "-25s" }} />
-        <span className="cloud" style={{ width: 240, height: 78, top: "2%", animationDuration: "72s", animationDelay: "-55s" }} />
-        <span className="cloud" style={{ width: 320, height: 95, top: "20%", animationDuration: "88s", animationDelay: "-5s" }} />
-        <span className="cloud" style={{ width: 190, height: 65, top: "46%", animationDuration: "68s", animationDelay: "-50s" }} />
-        <span className="cloud" style={{ width: 270, height: 82, top: "32%", animationDuration: "78s", animationDelay: "-30s" }} />
-        <span className="cloud" style={{ width: 210, height: 72, top: "56%", animationDuration: "82s", animationDelay: "-65s" }} />
+        <span className="cloud" style={{ width: 260, height: 80, top: "8%", animationDuration: "22s", animationDelay: "-1s" }} />
+        <span className="cloud" style={{ width: 180, height: 60, top: "18%", animationDuration: "28s", animationDelay: "-24s" }} />
+        <span className="cloud" style={{ width: 340, height: 100, top: "30%", animationDuration: "34s", animationDelay: "-5s" }} />
+        <span className="cloud" style={{ width: 200, height: 70, top: "42%", animationDuration: "26s", animationDelay: "-19s" }} />
+        <span className="cloud" style={{ width: 300, height: 90, top: "4%", animationDuration: "38s", animationDelay: "-33s" }} />
+        <span className="cloud" style={{ width: 220, height: 75, top: "24%", animationDuration: "30s", animationDelay: "-11s" }} />
+        <span className="cloud" style={{ width: 280, height: 85, top: "14%", animationDuration: "32s", animationDelay: "-28s" }} />
+        <span className="cloud" style={{ width: 160, height: 55, top: "36%", animationDuration: "24s", animationDelay: "-3s" }} />
+        <span className="cloud" style={{ width: 380, height: 110, top: "52%", animationDuration: "40s", animationDelay: "-15s" }} />
+        <span className="cloud" style={{ width: 240, height: 78, top: "2%", animationDuration: "29s", animationDelay: "-26s" }} />
+        <span className="cloud" style={{ width: 320, height: 95, top: "20%", animationDuration: "35s", animationDelay: "-7s" }} />
+        <span className="cloud" style={{ width: 190, height: 65, top: "46%", animationDuration: "27s", animationDelay: "-23s" }} />
+        <span className="cloud" style={{ width: 270, height: 82, top: "32%", animationDuration: "31s", animationDelay: "-2s" }} />
+        <span className="cloud" style={{ width: 210, height: 72, top: "56%", animationDuration: "33s", animationDelay: "-17s" }} />
       </div>
       <div className="night-stars" style={{ opacity: starsOpacity }}>{stars}</div>
       <div className="bg-aurora" style={{ opacity: night * 0.6 }} />
       <div className="bg-vignette" style={{ opacity: 0.4 + night * 0.6 }} />
       <div className="progress-bar" style={{ width: `${scrollPct}%` }} />
-      <div className="petals">{petals}</div>
+      <div className="petals" style={{ opacity: scrollPct > 0.1 ? 0 : 1, transition: "opacity .3s linear" }}>{scrollPct > 0.5 ? null : petals}</div>
       <div className={`burst-petals${scrollPct >= 13 && scrollPct <= 22 ? " active" : ""}`}>{burstPetals}</div>
 
       <section className="section hero">
