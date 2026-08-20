@@ -22,6 +22,12 @@ html,body{overflow-x:hidden}
 .sky-night{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#05060f 0%,#0d0b24 45%,#1a0d2e 100%)}
 .bg-fixed{position:fixed;left:0;right:0;top:0;bottom:0;z-index:4;background-image:url(${templeImg});background-repeat:no-repeat;background-position:center bottom;background-size:auto 115vh;background-attachment:fixed;transition:filter .3s linear}
 .bg-fixed-glow{position:fixed;left:0;right:0;top:0;bottom:0;z-index:4;background-image:url(${templeImg});background-repeat:no-repeat;background-position:center bottom;background-size:auto 115vh;background-attachment:fixed;mix-blend-mode:screen;pointer-events:none;filter:blur(14px);transition:opacity .4s linear}
+@media (max-width:768px){
+  .bg-fixed,.bg-fixed-glow{background-attachment:scroll;background-size:auto 90vh}
+  .scroll-hint{bottom:calc(env(safe-area-inset-bottom,0px) + 80px) !important;color:#fff !important;text-shadow:0 2px 8px rgba(0,0,0,.7);z-index:20}
+  .scroll-hint .line{background:linear-gradient(180deg,transparent,#fff) !important}
+  body{overscroll-behavior-y:none}
+}
 .couple-photo{position:fixed;left:50%;bottom:-5vh;z-index:5;width:min(260px,60vw);aspect-ratio:1/1;transform:translate(-50%,120vh);background-image:url(${coupleImg});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55)) drop-shadow(0 0 30px rgba(232,192,122,.4));pointer-events:none;will-change:transform}
 .clouds{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;transition:opacity .3s linear}
 .cloud{position:absolute;background:radial-gradient(ellipse at center,rgba(255,255,255,.95),rgba(255,255,255,.7) 50%,transparent 75%);border-radius:50%;filter:blur(6px);animation:cloudDrift linear infinite}
