@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import bgImg from "./temple.png";
 import coupleImg from "./couple.png";
 import musicSrc from "./music.mp3";
+import gImg1 from "./photo_gallery/img1.jpeg";
+import gImg2 from "./photo_gallery/img2.jpeg";
+import gImg3 from "./photo_gallery/img3.jpeg";
+import gImg4 from "./photo_gallery/img4.jpeg";
+import gImg5 from "./photo_gallery/img5.jpeg";
 
 const templeImg = bgImg;
 
@@ -159,7 +164,7 @@ html,body{overflow-x:hidden}
 .invite-card .couple{font-size:1.8rem;font-style:italic;margin:24px 0;background:linear-gradient(180deg,#fff,#e8a3a3);-webkit-background-clip:text;background-clip:text;color:transparent}
 .divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:24px 0;color:var(--gold)}
 .divider .l{flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.events{background:transparent;flex-direction:column}
+.events{background:transparent;flex-direction:column;padding-top:20px;min-height:auto}
 .events .kicker{color:var(--gold);margin-bottom:16px}
 .events h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:400;margin-bottom:60px;background:linear-gradient(180deg,#fff,#e8c07a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .event-grid{display:grid;gap:24px;width:min(1200px,95vw);grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
@@ -180,11 +185,23 @@ html,body{overflow-x:hidden}
 .card-haldi{--glow:rgba(246,214,122,.2)}
 .card-wedding{--glow:rgba(232,163,163,.2)}
 .card-reception{--glow:rgba(192,132,252,.2)}
-.footer{min-height:70vh;background:transparent;flex-direction:column}
+.gallery{background:transparent;flex-direction:column;padding-top:20px;min-height:auto}
+.gallery-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:400;margin:12px 0 40px;background:linear-gradient(180deg,#fff,#e8c07a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gallery-grid{display:grid;gap:20px;width:min(1200px,95vw);grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:40px}
+.gallery-item{aspect-ratio:3/5;overflow:hidden;border-radius:16px;border:1px solid var(--line);position:relative;cursor:pointer;background:rgba(255,255,255,.03);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .4s ease;filter:brightness(.92) saturate(1.05)}
+.gallery-item:hover img{transform:scale(1.08);filter:brightness(1.05) saturate(1.15)}
+.gallery-item:after{content:"Click to view";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55));opacity:0;transition:opacity .4s ease;display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;color:#fff;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.gallery-item:hover:after{opacity:1}
+.lightbox{position:fixed;inset:0;z-index:10002;background:rgba(5,4,10,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;animation:splashIn .3s ease;cursor:zoom-out}
+.lightbox img{max-width:95vw;max-height:90vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 40px rgba(232,192,122,.25);object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:rgba(13,11,18,.7);color:var(--gold);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-close:hover{background:var(--gold);color:#0d0b12}
+.footer{min-height:70vh;background:transparent;flex-direction:column;padding-top:70px;min-height:auto}
 .footer .big-hash{font-size:clamp(2.5rem,8vw,6rem);font-weight:400;letter-spacing:-1px;background:linear-gradient(180deg,#fff,#e8c07a,#e8a3a3);-webkit-background-clip:text;background-clip:text;color:transparent}
 .footer .thanks{margin-top:24px;color:var(--muted)}
 .footer .love{margin-top:32px;color:var(--muted);max-width:500px;font-style:italic;font-size:1.15rem;line-height:1.7}
-@media (max-width:640px){.invite-card{padding:50px 24px}.event-card{padding:32px 22px}}
+@media (max-width:640px){.invite-card{padding:50px 24px}.event-card{padding:32px 22px}.gallery-grid{grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}.gallery-item{border-radius:12px}}
 `;
 
 function useInView() {
@@ -215,6 +232,8 @@ export default function WeddingInvitation() {
   const [scrollPct, setScrollPct] = useState(0);
   const [entered, setEntered] = useState(false);
   const [opening, setOpening] = useState(false);
+  const [lightbox, setLightbox] = useState(null);
+  const galleryPhotos = [gImg2, gImg1, gImg3, gImg4, gImg5];
   const audioRef = React.useRef(null);
 
   const enter = () => {
@@ -441,6 +460,25 @@ export default function WeddingInvitation() {
           </Reveal>
         </div>
       </section>
+
+      <section className="section gallery">
+        <Reveal variant="fade-up"><div className="mono kicker" style={{ color: "var(--gold)" }}>✦ Our Memories ✦</div></Reveal>
+        <Reveal variant="fade-up"><h2 className="gallery-title">Moments together</h2></Reveal>
+        <div className="gallery-grid">
+          {galleryPhotos.map((src, i) => (
+            <Reveal key={i} variant="fade-scale" className="gallery-item" style={{ transitionDelay: `${(i % 4) * 80}ms` }}>
+              <img src={src} alt="" loading="lazy" onClick={() => setLightbox(src)} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {lightbox && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <img src={lightbox} alt="" />
+          <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Close">×</button>
+        </div>
+      )}
 
       <section className="section footer">
         <Reveal variant="fade-up"><div className="mono" style={{ color: "var(--gold)" }}>✦ Join us in celebrating ✦</div></Reveal>
