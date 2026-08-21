@@ -116,9 +116,10 @@ html,body{overflow-x:hidden}
 .hashtag{margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border:2px solid #ffd24d;border-radius:100px;color:#ffffff;background:linear-gradient(90deg,#f6a825,#ff6fa8,#c58bff);font-family:'Cinzel',serif;font-weight:800;letter-spacing:4px;font-size:14px}
 .hashtag .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.4;transform:scale(1.4)}}
-.scroll-hint{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);animation:bounce 1.8s infinite;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:20;font-weight:600}
-.scroll-hint .line{width:2px;height:48px;background:linear-gradient(180deg,transparent,#ffd97a);box-shadow:0 0 8px rgba(0,0,0,.6);position:relative}
-.scroll-hint .line:after{content:"";position:absolute;left:50%;bottom:-3px;width:10px;height:10px;border-right:2px solid #ffd97a;border-bottom:2px solid #ffd97a;transform:translateX(-50%) rotate(45deg);filter:drop-shadow(0 0 6px rgba(255,217,122,.8))}
+.scroll-hint{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 100px);transform:translateX(-50%);z-index:9998;display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 16px;border-radius:100px;background:rgba(13,11,18,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,217,122,.55);color:#fff;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:600;box-shadow:0 8px 28px rgba(0,0,0,.5),0 0 20px rgba(255,217,122,.25);animation:hintFloat 2s ease-in-out infinite;transition:opacity .3s ease}
+.scroll-hint .chev{display:inline-block;width:10px;height:10px;border-right:2px solid #ffd97a;border-bottom:2px solid #ffd97a;transform:rotate(45deg);margin-top:-4px}
+.scroll-hint .line{display:none}
+@keyframes hintFloat{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,6px)}}
 @keyframes bounce{0%,100%{transform:translate(-50%,0);opacity:.6}50%{transform:translate(-50%,8px);opacity:1}}
 .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5}
 .orb.o1{width:320px;height:320px;background:#c084fc;top:-80px;left:-80px;animation:drift 18s ease-in-out infinite}
@@ -361,12 +362,14 @@ export default function WeddingInvitation() {
             <div className="sub">Two souls, one journey — beginning September 4, 2026</div>
            
           </div>
-          <div className="scroll-hint">
-            <span className="mono">Scroll</span>
-            <span className="line" />
-          </div>
         </div>
       </section>
+      {entered && scrollPct < 3 && (
+        <div className="scroll-hint">
+          <span>Scroll</span>
+          <span className="chev" />
+        </div>
+      )}
 
       <section className="section invite">
         <Reveal variant="fade-scale" className="invite-card">
