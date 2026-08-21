@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import bgImg from "./temple.png";
 import coupleImg from "./couple.png";
+import musicSrc from "./music.mp3";
 
 const templeImg = bgImg;
 
@@ -17,6 +18,34 @@ const styles = `
 *{box-sizing:border-box}
 html,body,#root,.wedding-root{margin:0;padding:0}
 html,body{overflow-x:hidden}
+.splash{position:fixed;inset:0;z-index:10001;background:rgba(13,11,18,.35);backdrop-filter:blur(18px) saturate(1.1);-webkit-backdrop-filter:blur(18px) saturate(1.1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;cursor:pointer;animation:splashIn .5s ease;gap:20px}
+.envelope{position:relative;width:min(440px,90vw);aspect-ratio:1.5/1;perspective:1400px;cursor:pointer;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6)) drop-shadow(0 0 40px rgba(232,192,122,.35))}
+.env-body{position:absolute;inset:0;background:linear-gradient(160deg,#fff8e8 0%,#f3e0b8 55%,#e5c98a 100%);border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(120,80,20,.2),inset 0 0 80px rgba(180,130,50,.15);z-index:1}
+.env-body:before{content:"";position:absolute;inset:10px;border:1px dashed rgba(164,19,60,.35);border-radius:6px;pointer-events:none}
+.env-address{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;z-index:1}
+.env-orn{letter-spacing:12px;color:#a4133c;font-size:11px;opacity:.8;margin-bottom:10px}
+.env-to{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#6b3d10;letter-spacing:3px;text-transform:uppercase}
+.env-names{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,8vw,3.8rem);line-height:1.05;margin-top:8px;color:#7a1029;text-shadow:0 2px 6px rgba(120,20,40,.15)}
+.env-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#6b3d10;margin-top:8px;letter-spacing:1px;max-width:80%}
+/* Side flaps folded in when closed, open outward on hover */
+.env-side{position:absolute;top:0;bottom:0;width:52%;background:linear-gradient(160deg,#f3d99a,#c9a35a);z-index:3;transition:transform .9s cubic-bezier(.5,-.1,.4,1.2);box-shadow:inset 0 0 40px rgba(120,80,20,.15)}
+.env-left{left:0;clip-path:polygon(0 0,100% 50%,0 100%);transform-origin:left center;transform:rotateY(0deg)}
+.env-right{right:0;clip-path:polygon(100% 0,0 50%,100% 100%);transform-origin:right center;transform:rotateY(0deg)}
+/* Top flap folds down over side flaps when closed */
+.env-flap{position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,#f3d99a 0%,#c9a35a 100%);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transform:rotateX(0deg);transition:transform .9s cubic-bezier(.5,-.15,.4,1.25);z-index:4;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+.env-seal{position:absolute;left:50%;top:calc(58% - 30px);transform:translateX(-50%);width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#f07a8f 0%,#c9184a 45%,#7a1029 80%,#4a0616 100%);display:flex;align-items:center;justify-content:center;color:#ffe9b8;font-family:'Great Vibes',cursive;font-weight:400;font-size:26px;box-shadow:0 10px 22px rgba(120,20,40,.6),inset 0 -5px 10px rgba(0,0,0,.5),inset 0 4px 8px rgba(255,220,180,.35),0 0 0 3px rgba(255,217,122,.25);z-index:5;cursor:pointer;animation:sealPulse 2.4s ease-in-out infinite;border:2.5px solid #ffd97a;transition:transform .5s ease,opacity .5s ease;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.env-seal:before{content:"";position:absolute;inset:5px;border-radius:50%;border:1px dashed rgba(255,217,122,.5);pointer-events:none}
+.seal-inner{display:inline-flex;align-items:center;line-height:1}
+.seal-amp{font-size:14px;margin:0 2px;opacity:.85}
+.envelope.opening .env-flap{transform:rotateX(-170deg)}
+.envelope.opening .env-left{transform:rotateY(-170deg)}
+.envelope.opening .env-right{transform:rotateY(170deg)}
+.envelope.opening .env-seal{transform:translateX(-50%) scale(.6);opacity:0}
+@keyframes sealPulse{50%{box-shadow:0 8px 24px rgba(232,80,110,.75),0 0 34px rgba(232,192,122,.55),inset 0 -4px 8px rgba(0,0,0,.4)}}
+.splash-btn{margin-top:8px;padding:14px 34px;border-radius:100px;border:1.5px solid #e8c07a;background:linear-gradient(90deg,rgba(246,168,37,.15),rgba(255,111,168,.15),rgba(197,139,255,.15));color:#fff;font-family:'Cinzel',serif;letter-spacing:3px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 10px 40px rgba(232,192,122,.35);transition:transform .3s ease,box-shadow .3s ease}
+.splash-btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 50px rgba(232,192,122,.55)}
+.splash-hint{color:#b8afa3;font-size:12px;letter-spacing:2px;text-transform:uppercase;animation:pulse 2s ease-in-out infinite}
+@keyframes splashIn{from{opacity:0}to{opacity:1}}
 .wedding-root{font-family:'Cormorant Garamond','Playfair Display',Georgia,serif;color:var(--ink);background:var(--bg);position:relative}
 .sky-day{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#89c7ff 0%,#b8dcff 40%,#ffd9a8 80%,#ffb98a 100%)}
 .sky-night{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#05060f 0%,#0d0b24 45%,#1a0d2e 100%)}
@@ -39,6 +68,17 @@ html,body{overflow-x:hidden}
 .wedding-root h1,.wedding-root h2,.wedding-root h3{margin:0;font-weight:500;letter-spacing:1px}
 .mono{font-family:'Inter','Helvetica Neue',Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;font-size:12px;font-weight:600}
 .progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--rose),var(--accent));z-index:9999;transition:width .1s linear;box-shadow:0 0 12px rgba(232,192,122,.6)}
+.music-toggle{position:fixed;top:18px;right:18px;z-index:10000;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:rgba(13,11,18,.55);backdrop-filter:blur(10px);color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 20px rgba(232,192,122,.25);transition:transform .3s ease,box-shadow .3s ease}
+.music-toggle:hover{transform:scale(1.08);box-shadow:0 4px 24px rgba(0,0,0,.5),0 0 28px rgba(232,192,122,.5)}
+.music-toggle .note{font-size:22px;line-height:1}
+.music-toggle .eq{display:inline-flex;align-items:flex-end;gap:2px;height:16px}
+.music-toggle .eq i{display:block;width:3px;background:var(--gold);border-radius:2px;animation:eqBar .9s ease-in-out infinite}
+.music-toggle .eq i:nth-child(1){height:40%;animation-delay:-.2s}
+.music-toggle .eq i:nth-child(2){height:80%;animation-delay:-.5s}
+.music-toggle .eq i:nth-child(3){height:60%;animation-delay:-.1s}
+.music-toggle .eq i:nth-child(4){height:90%;animation-delay:-.35s}
+@keyframes eqBar{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.music-toggle.playing{border-color:var(--rose);box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 24px rgba(232,163,163,.5)}
 .petals{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
 .burst-petals{position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden;opacity:0;transition:opacity .4s ease}
 .burst-petals.active{opacity:1}
@@ -76,8 +116,9 @@ html,body{overflow-x:hidden}
 .hashtag{margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border:2px solid #ffd24d;border-radius:100px;color:#ffffff;background:linear-gradient(90deg,#f6a825,#ff6fa8,#c58bff);font-family:'Cinzel',serif;font-weight:800;letter-spacing:4px;font-size:14px}
 .hashtag .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.4;transform:scale(1.4)}}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--muted);animation:bounce 1.8s infinite;display:flex;flex-direction:column;align-items:center;gap:8px}
-.scroll-hint .line{width:1px;height:40px;background:linear-gradient(180deg,transparent,var(--gold))}
+.scroll-hint{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);animation:bounce 1.8s infinite;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:20;font-weight:600}
+.scroll-hint .line{width:2px;height:48px;background:linear-gradient(180deg,transparent,#ffd97a);box-shadow:0 0 8px rgba(0,0,0,.6);position:relative}
+.scroll-hint .line:after{content:"";position:absolute;left:50%;bottom:-3px;width:10px;height:10px;border-right:2px solid #ffd97a;border-bottom:2px solid #ffd97a;transform:translateX(-50%) rotate(45deg);filter:drop-shadow(0 0 6px rgba(255,217,122,.8))}
 @keyframes bounce{0%,100%{transform:translate(-50%,0);opacity:.6}50%{transform:translate(-50%,8px);opacity:1}}
 .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5}
 .orb.o1{width:320px;height:320px;background:#c084fc;top:-80px;left:-80px;animation:drift 18s ease-in-out infinite}
@@ -171,6 +212,26 @@ const Reveal = ({ as: Tag = "div", variant = "fade-up", children, className = ""
 
 export default function WeddingInvitation() {
   const [scrollPct, setScrollPct] = useState(0);
+  const [entered, setEntered] = useState(false);
+  const [opening, setOpening] = useState(false);
+  const audioRef = React.useRef(null);
+
+  const enter = () => {
+    setEntered(true);
+    document.body.style.overflow = "";
+    const a = audioRef.current;
+    if (a) {
+      a.volume = 0.4;
+      a.muted = false;
+      const p = a.play();
+      if (p && p.then) p.catch(() => {});
+    }
+  };
+
+  useEffect(() => {
+    if (!entered) document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [entered]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -231,6 +292,33 @@ export default function WeddingInvitation() {
   return (
     <div className="wedding-root" style={{ "--temple-url": `url("${templeImg}")` }}>
       <style>{styles}</style>
+      {!entered && (
+        <div className="splash">
+          <div className={`envelope${opening ? " opening" : ""}`} onClick={(e) => {
+            e.stopPropagation();
+            if (opening) return;
+            setOpening(true);
+            const a = audioRef.current;
+            if (a) { a.volume = 0.4; a.muted = false; const p = a.play(); if (p && p.then) p.catch(() => {}); }
+            setTimeout(() => enter(), 1200);
+          }}>
+            <div className="env-body">
+              <div className="env-address">
+                <div className="env-orn">✦ ⋆ ✦</div>
+                <div className="env-to">Wedding Invitation</div>
+                <div className="env-names">Jaswanth &amp; Harika</div>
+                <div className="env-sub">request the pleasure of your company</div>
+              </div>
+            </div>
+            <div className="env-side env-left" />
+            <div className="env-side env-right" />
+            <div className="env-flap" />
+            <div className="env-seal">
+              <span className="seal-inner">Open</span>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="sky-day" style={{ opacity: day }} />
       <div className="sky-night" style={{ opacity: night }} />
       <div className="bg-fixed" style={{ transform: `translateY(${templeY}%)`, filter: `brightness(${templeBrightness}) saturate(${1 + night * 0.15})` }} />
@@ -258,6 +346,7 @@ export default function WeddingInvitation() {
       <div className="bg-aurora" style={{ opacity: night * 0.6 }} />
       <div className="bg-vignette" style={{ opacity: 0.4 + night * 0.6 }} />
       <div className="progress-bar" style={{ width: `${scrollPct}%` }} />
+      <audio ref={audioRef} src={musicSrc} loop preload="auto" playsInline />
       <div className="petals" style={{ opacity: scrollPct > 0.1 ? 0 : 1, transition: "opacity .3s linear" }}>{scrollPct > 0.5 ? null : petals}</div>
       <div className={`burst-petals${scrollPct >= 13 && scrollPct <= 22 ? " active" : ""}`}>{burstPetals}</div>
 
@@ -270,9 +359,7 @@ export default function WeddingInvitation() {
               Harika
             </h1>
             <div className="sub">Two souls, one journey — beginning September 4, 2026</div>
-            <div style={{ marginTop: 36 }}>
-              <div className="hashtag"><span className="dot" />#JasWonHarika</div>
-            </div>
+           
           </div>
           <div className="scroll-hint">
             <span className="mono">Scroll</span>
