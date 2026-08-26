@@ -7,6 +7,7 @@ import gImg2 from "./photo_gallery/img2.jpeg";
 import gImg3 from "./photo_gallery/img3.jpeg";
 import gImg4 from "./photo_gallery/img4.jpeg";
 import gImg5 from "./photo_gallery/img5.jpeg";
+import gImg6 from "./photo_gallery/img6.jpeg";
 
 const templeImg = bgImg;
 
@@ -233,7 +234,7 @@ export default function WeddingInvitation() {
   const [entered, setEntered] = useState(false);
   const [opening, setOpening] = useState(false);
   const [lightbox, setLightbox] = useState(null);
-  const galleryPhotos = [gImg2, gImg1, gImg3, gImg4, gImg5];
+  const galleryPhotos = [gImg2, gImg1, gImg6];
   const audioRef = React.useRef(null);
 
   const enter = () => {
@@ -326,7 +327,7 @@ export default function WeddingInvitation() {
               <div className="env-address">
                 <div className="env-orn">✦ ⋆ ✦</div>
                 <div className="env-to">Wedding Invitation</div>
-                <div className="env-names">Jaswanth &amp; Harika</div>
+                <div className="env-names">Jaswanth &amp; Sri Harika</div>
                 <div className="env-sub">request the pleasure of your company</div>
               </div>
             </div>
@@ -376,7 +377,7 @@ export default function WeddingInvitation() {
             <h1 className="names">
               Jaswanth
               <span className="amp">&amp;</span>
-              Harika
+              Sri Harika
             </h1>
             <div className="sub">Two souls, one journey — beginning September 4, 2026</div>
            
@@ -402,7 +403,7 @@ export default function WeddingInvitation() {
             With hearts full of joy, we invite you to celebrate <br />
             the beginning of a beautiful journey as
           </p>
-          <div className="couple">Jaswanth &amp; Harika</div>
+          <div className="couple">Jaswanth &amp; Sri Harika</div>
           <div className="divider"><span className="l" />✦<span className="l" /></div>
           <p>
             exchange vows and step into forever together. <br />
@@ -461,7 +462,7 @@ export default function WeddingInvitation() {
         </div>
       </section>
 
-      <section className="section gallery">
+      {/* <section className="section gallery">
         <Reveal variant="fade-up"><div className="mono kicker" style={{ color: "var(--gold)" }}>✦ Our Memories ✦</div></Reveal>
         <Reveal variant="fade-up"><h2 className="gallery-title">Moments together</h2></Reveal>
         <div className="gallery-grid">
@@ -471,7 +472,7 @@ export default function WeddingInvitation() {
             </Reveal>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {lightbox && (
         <div className="lightbox" onClick={() => setLightbox(null)}>
@@ -483,7 +484,7 @@ export default function WeddingInvitation() {
       <section className="section footer">
         <Reveal variant="fade-up"><div className="mono" style={{ color: "var(--gold)" }}>✦ Join us in celebrating ✦</div></Reveal>
         <Reveal variant="fade-scale"><div className="big-hash" style={{ marginTop: 20 }}>#JasWonHarika</div></Reveal>
-        <Reveal variant="fade-up"><div className="thanks mono">With love · Jaswanth &amp; Harika</div></Reveal>
+        <Reveal variant="fade-up"><div className="thanks mono">With love · Jaswanth &amp; Sri Harika</div></Reveal>
       </section>
     </div>
   );
