@@ -2,12 +2,6 @@ import React, { useEffect, useState } from "react";
 import bgImg from "./temple.png";
 import coupleImg from "./couple.png";
 import musicSrc from "./music.mp3";
-import gImg1 from "./photo_gallery/img1.jpeg";
-import gImg2 from "./photo_gallery/img2.jpeg";
-import gImg3 from "./photo_gallery/img3.jpeg";
-import gImg4 from "./photo_gallery/img4.jpeg";
-import gImg5 from "./photo_gallery/img5.jpeg";
-import gImg6 from "./photo_gallery/img6.jpeg";
 
 const templeImg = bgImg;
 
@@ -234,7 +228,7 @@ export default function WeddingInvitation() {
   const [entered, setEntered] = useState(false);
   const [opening, setOpening] = useState(false);
   const [lightbox, setLightbox] = useState(null);
-  const galleryPhotos = [gImg2, gImg1, gImg6];
+  // const galleryPhotos = [gImg2, gImg1, gImg6];
   const audioRef = React.useRef(null);
 
   const enter = () => {
