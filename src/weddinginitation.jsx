@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import bgImg from "./temple.png";
 import coupleImg from "./couple.png";
 import musicSrc from "./music.mp3";
+import { saveRSVP } from "./firebase";
 
 const templeImg = bgImg;
 
@@ -192,6 +193,39 @@ html,body{overflow-x:hidden}
 .lightbox img{max-width:95vw;max-height:90vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 40px rgba(232,192,122,.25);object-fit:contain}
 .lightbox-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:rgba(13,11,18,.7);color:var(--gold);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .lightbox-close:hover{background:var(--gold);color:#0d0b12}
+/* RSVP Section */
+.rsvp{background:transparent;flex-direction:column;padding:60px 24px;min-height:auto}
+.rsvp-card{max-width:560px;width:100%;padding:50px 40px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));backdrop-filter:blur(20px);position:relative;box-shadow:0 40px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+.rsvp-card h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;margin-bottom:8px;background:linear-gradient(180deg,#fff,#e8c07a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rsvp-card .subtitle{color:var(--muted);font-style:italic;margin-bottom:32px;font-size:1.1rem}
+.rsvp-form{display:flex;flex-direction:column;gap:20px}
+.rsvp-field{display:flex;flex-direction:column;gap:8px;text-align:left}
+.rsvp-field label{color:var(--gold);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.rsvp-field input,.rsvp-field select,.rsvp-field textarea{padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:1.1rem;transition:border-color .3s ease,box-shadow .3s ease;outline:none}
+.rsvp-field input::placeholder,.rsvp-field textarea::placeholder{color:var(--muted);opacity:.6}
+.rsvp-field input:focus,.rsvp-field select:focus,.rsvp-field textarea:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(232,192,122,.2)}
+.rsvp-field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e8c07a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.rsvp-field select option{background:#1a1428;color:var(--ink)}
+.rsvp-field textarea{resize:none;min-height:80px}
+.rsvp-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rsvp-btn{margin-top:12px;padding:16px 40px;border-radius:100px;border:1.5px solid var(--gold);background:linear-gradient(90deg,rgba(232,192,122,.15),rgba(232,163,163,.15));color:#fff;font-family:'Cinzel',serif;letter-spacing:3px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s ease}
+.rsvp-btn:hover{background:var(--gold);color:#0d0b12;transform:translateY(-2px);box-shadow:0 12px 30px rgba(232,192,122,.4)}
+.rsvp-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.rsvp-success{text-align:center;padding:40px 20px}
+.rsvp-success .check{font-size:48px;margin-bottom:16px}
+.rsvp-success h3{color:var(--gold);font-size:1.6rem;margin-bottom:12px}
+.rsvp-success p{color:var(--muted);font-style:italic}
+@media (max-width:640px){.rsvp-card{padding:40px 24px}.rsvp-row{grid-template-columns:1fr}}
+/* Countdown Timer */
+.countdown{background:transparent;flex-direction:column;padding:60px 24px;min-height:auto}
+.countdown-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;margin-bottom:8px;background:linear-gradient(180deg,#fff,#e8c07a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.countdown-subtitle{color:var(--muted);font-style:italic;margin-bottom:40px;font-size:1.1rem}
+.countdown-grid{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.countdown-item{min-width:90px;padding:24px 20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));backdrop-filter:blur(20px);text-align:center}
+.countdown-num{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,6vw,3.5rem);color:var(--gold);line-height:1;display:block}
+.countdown-label{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px;display:block}
+.countdown-done{font-family:'Great Vibes',cursive;font-size:clamp(2rem,5vw,3rem);color:var(--gold);text-align:center;padding:40px}
+@media (max-width:480px){.countdown-item{min-width:70px;padding:18px 14px}.countdown-num{font-size:2rem}}
 .footer{min-height:70vh;background:transparent;flex-direction:column;padding-top:70px;min-height:auto}
 .footer .big-hash{font-size:clamp(2.5rem,8vw,6rem);font-weight:400;letter-spacing:-1px;background:linear-gradient(180deg,#fff,#e8c07a,#e8a3a3);-webkit-background-clip:text;background-clip:text;color:transparent}
 .footer .thanks{margin-top:24px;color:var(--muted)}
@@ -228,8 +262,35 @@ export default function WeddingInvitation() {
   const [entered, setEntered] = useState(false);
   const [opening, setOpening] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+  const [rsvp, setRsvp] = useState({ name: "", email: "", attending: "", guests: "1", message: "" });
+  const [rsvpSent, setRsvpSent] = useState(false);
+  const [rsvpLoading, setRsvpLoading] = useState(false);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, done: false });
   // const galleryPhotos = [gImg2, gImg1, gImg6];
   const audioRef = React.useRef(null);
+
+  // Countdown timer to wedding muhurtam: Sep 4, 2026 at 10:41 AM IST
+  useEffect(() => {
+    const weddingDate = new Date("2026-09-04T10:41:00+05:30").getTime();
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+      if (diff <= 0) {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0, done: true });
+        return;
+      }
+      setCountdown({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((diff % (1000 * 60)) / 1000),
+        done: false
+      });
+    };
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const enter = () => {
     setEntered(true);
@@ -474,6 +535,127 @@ export default function WeddingInvitation() {
           <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Close">×</button>
         </div>
       )}
+
+      <section className="section rsvp">
+        <Reveal variant="fade-up"><div className="mono kicker" style={{ color: "var(--gold)" }}>✦ RSVP ✦</div></Reveal>
+        <Reveal variant="fade-scale" className="rsvp-card">
+          {!rsvpSent ? (
+            <>
+              <h2>Will you join us?</h2>
+              <form className="rsvp-form" onSubmit={async (e) => {
+                e.preventDefault();
+                setRsvpLoading(true);
+                const result = await saveRSVP({
+                  name: rsvp.name,
+                  contact: rsvp.email,
+                  attending: rsvp.attending === "yes",
+                  guests: parseInt(rsvp.guests),
+                  message: rsvp.message || ""
+                });
+                setRsvpLoading(false);
+                if (result.success) {
+                  setRsvpSent(true);
+                } else {
+                  alert("Failed to send RSVP. Please try again.");
+                }
+              }}>
+                <div className="rsvp-field">
+                  <label>Your Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter your full name" 
+                    value={rsvp.name}
+                    onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
+                    required 
+                  />
+                </div>
+                <div className="rsvp-field">
+                  <label>Email / Phone</label>
+                  <input 
+                    type="text" 
+                    placeholder="How can we reach you?" 
+                    value={rsvp.email}
+                    onChange={(e) => setRsvp({ ...rsvp, email: e.target.value })}
+                    required 
+                  />
+                </div>
+                <div className="rsvp-row">
+                  <div className="rsvp-field">
+                    <label>Attending?</label>
+                    <select 
+                      value={rsvp.attending}
+                      onChange={(e) => setRsvp({ ...rsvp, attending: e.target.value })}
+                      required
+                    >
+                      <option value="">Select...</option>
+                      <option value="yes">Joyfully Accept</option>
+                      <option value="no">Regretfully Decline</option>
+                    </select>
+                  </div>
+                  <div className="rsvp-field">
+                    <label>Number of Guests</label>
+                    <select 
+                      value={rsvp.guests}
+                      onChange={(e) => setRsvp({ ...rsvp, guests: e.target.value })}
+                    >
+                      <option value="1">1 Guest</option>
+                      <option value="2">2 Guests</option>
+                      <option value="3">3 Guests</option>
+                      <option value="4">4 Guests</option>
+                      <option value="5">5+ Guests</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="rsvp-field">
+                  <label>Message (Optional)</label>
+                  <textarea 
+                    placeholder="Any dietary restrictions or wishes for the couple?" 
+                    value={rsvp.message}
+                    onChange={(e) => setRsvp({ ...rsvp, message: e.target.value })}
+                  />
+                </div>
+                <button type="submit" className="rsvp-btn" disabled={rsvpLoading}>
+                  {rsvpLoading ? "Sending..." : "Send RSVP"}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className="rsvp-success">
+              <div className="check">💝</div>
+              <h3>Thank You!</h3>
+              <p>Your response has been received. We can't wait to celebrate with you!</p>
+            </div>
+          )}
+        </Reveal>
+      </section>
+
+      <section className="section countdown">
+        <Reveal variant="fade-up"><div className="mono kicker" style={{ color: "var(--gold)" }}>✦ Save The Date ✦</div></Reveal>
+        <Reveal variant="fade-up"><h2 className="countdown-title">Counting down to forever</h2></Reveal>
+        <Reveal variant="fade-up"><p className="countdown-subtitle">September 4, 2026 · Muhurtam at 10:41 AM</p></Reveal>
+        {countdown.done ? (
+          <Reveal variant="fade-scale"><div className="countdown-done">🎊 The moment has arrived! 🎊</div></Reveal>
+        ) : (
+          <Reveal variant="fade-scale" className="countdown-grid">
+            <div className="countdown-item">
+              <span className="countdown-num">{countdown.days}</span>
+              <span className="countdown-label">Days</span>
+            </div>
+            <div className="countdown-item">
+              <span className="countdown-num">{countdown.hours}</span>
+              <span className="countdown-label">Hours</span>
+            </div>
+            <div className="countdown-item">
+              <span className="countdown-num">{countdown.minutes}</span>
+              <span className="countdown-label">Minutes</span>
+            </div>
+            <div className="countdown-item">
+              <span className="countdown-num">{countdown.seconds}</span>
+              <span className="countdown-label">Seconds</span>
+            </div>
+          </Reveal>
+        )}
+      </section>
 
       <section className="section footer">
         <Reveal variant="fade-up"><div className="mono" style={{ color: "var(--gold)" }}>✦ Join us in celebrating ✦</div></Reveal>
