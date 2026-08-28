@@ -609,7 +609,7 @@ export default function WeddingInvitation() {
                 <div className="rsvp-field">
                   <label>Message (Optional)</label>
                   <textarea 
-                    placeholder="Any dietary restrictions or wishes for the couple?" 
+                    placeholder="Wishes for the couple?" 
                     value={rsvp.message}
                     onChange={(e) => setRsvp({ ...rsvp, message: e.target.value })}
                   />
